@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		525F79A9233C4535006A5E27 /* PlayerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F79A8233C4535006A5E27 /* PlayerData.swift */; };
+		525F79AC233C459C006A5E27 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F79AB233C459C006A5E27 /* GameData.swift */; };
+		525F79AF233C4764006A5E27 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 525F79AE233C4764006A5E27 /* person.png */; };
+		525F79B1233C4811006A5E27 /* corg.png in Resources */ = {isa = PBXBuildFile; fileRef = 525F79B0233C4811006A5E27 /* corg.png */; };
+		525F79B4233C4932006A5E27 /* GameData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 525F79B2233C4932006A5E27 /* GameData.xcdatamodeld */; };
+		525F79B6233C4DE6006A5E27 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F79B5233C4DE6006A5E27 /* LeaderboardViewController.swift */; };
+		525F79B8233C50EE006A5E27 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F79B7233C50EE006A5E27 /* DetailsViewController.swift */; };
+		525F79BB233C73B0006A5E27 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F79BA233C73B0006A5E27 /* SettingsViewController.swift */; };
 		5289E485233AE6D20080687A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5289E484233AE6D20080687A /* AppDelegate.swift */; };
 		5289E487233AE6D20080687A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5289E486233AE6D20080687A /* SceneDelegate.swift */; };
 		5289E489233AE6D20080687A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5289E488233AE6D20080687A /* ViewController.swift */; };
@@ -16,7 +24,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5289E481233AE6D20080687A /* DisappearingUnicorns.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisappearingUnicorns.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		525F79A8233C4535006A5E27 /* PlayerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerData.swift; sourceTree = "<group>"; };
+		525F79AB233C459C006A5E27 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
+		525F79AE233C4764006A5E27 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = person.png; path = "../../../../../../Downloads/CPSC 575 Assignemnt 2 Resources/person.png"; sourceTree = "<group>"; };
+		525F79B0233C4811006A5E27 /* corg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = corg.png; path = ../../../../../../Desktop/Lindsay/corg.png; sourceTree = "<group>"; };
+		525F79B3233C4932006A5E27 /* GameData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GameData.xcdatamodel; sourceTree = "<group>"; };
+		525F79B5233C4DE6006A5E27 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
+		525F79B7233C50EE006A5E27 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		525F79B9233C6FB5006A5E27 /* corg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = corg.png; sourceTree = "<group>"; };
+		525F79BA233C73B0006A5E27 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5289E481233AE6D20080687A /* it.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = it.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5289E484233AE6D20080687A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5289E486233AE6D20080687A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5289E488233AE6D20080687A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,32 +54,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		525F79AA233C4546006A5E27 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				525F79A8233C4535006A5E27 /* PlayerData.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		525F79AD233C4750006A5E27 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				525F79B0233C4811006A5E27 /* corg.png */,
+				525F79AE233C4764006A5E27 /* person.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		5289E478233AE6D20080687A = {
 			isa = PBXGroup;
 			children = (
 				5289E483233AE6D20080687A /* DisappearingUnicorns */,
-				5289E482233AE6D20080687A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
 		5289E482233AE6D20080687A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5289E481233AE6D20080687A /* DisappearingUnicorns.app */,
+				5289E481233AE6D20080687A /* it.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		5289E483233AE6D20080687A /* DisappearingUnicorns */ = {
 			isa = PBXGroup;
 			children = (
+				525F79B2233C4932006A5E27 /* GameData.xcdatamodeld */,
 				5289E484233AE6D20080687A /* AppDelegate.swift */,
 				5289E486233AE6D20080687A /* SceneDelegate.swift */,
 				5289E488233AE6D20080687A /* ViewController.swift */,
 				5289E48A233AE6D20080687A /* Main.storyboard */,
 				5289E48D233AE6D30080687A /* Assets.xcassets */,
+				525F79B9233C6FB5006A5E27 /* corg.png */,
 				5289E48F233AE6D30080687A /* LaunchScreen.storyboard */,
 				5289E492233AE6D30080687A /* Info.plist */,
+				525F79AD233C4750006A5E27 /* Images */,
+				525F79AA233C4546006A5E27 /* Resources */,
+				525F79AB233C459C006A5E27 /* GameData.swift */,
+				5289E482233AE6D20080687A /* Products */,
+				525F79B5233C4DE6006A5E27 /* LeaderboardViewController.swift */,
+				525F79B7233C50EE006A5E27 /* DetailsViewController.swift */,
+				525F79BA233C73B0006A5E27 /* SettingsViewController.swift */,
 			);
 			path = DisappearingUnicorns;
 			sourceTree = "<group>";
@@ -84,7 +127,7 @@
 			);
 			name = DisappearingUnicorns;
 			productName = DisappearingUnicorns;
-			productReference = 5289E481233AE6D20080687A /* DisappearingUnicorns.app */;
+			productReference = 5289E481233AE6D20080687A /* it.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -125,6 +168,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				525F79AF233C4764006A5E27 /* person.png in Resources */,
+				525F79B1233C4811006A5E27 /* corg.png in Resources */,
 				5289E491233AE6D30080687A /* LaunchScreen.storyboard in Resources */,
 				5289E48E233AE6D30080687A /* Assets.xcassets in Resources */,
 				5289E48C233AE6D20080687A /* Main.storyboard in Resources */,
@@ -138,9 +183,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				525F79B6233C4DE6006A5E27 /* LeaderboardViewController.swift in Sources */,
 				5289E489233AE6D20080687A /* ViewController.swift in Sources */,
+				525F79B4233C4932006A5E27 /* GameData.xcdatamodeld in Sources */,
+				525F79B8233C50EE006A5E27 /* DetailsViewController.swift in Sources */,
+				525F79AC233C459C006A5E27 /* GameData.swift in Sources */,
 				5289E485233AE6D20080687A /* AppDelegate.swift in Sources */,
+				525F79A9233C4535006A5E27 /* PlayerData.swift in Sources */,
 				5289E487233AE6D20080687A /* SceneDelegate.swift in Sources */,
+				525F79BB233C73B0006A5E27 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,13 +336,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3GCZ49DF5A;
 				INFOPLIST_FILE = DisappearingUnicorns/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = inky.DisappearingUnicorns;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = it;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -302,13 +354,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3GCZ49DF5A;
 				INFOPLIST_FILE = DisappearingUnicorns/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = inky.DisappearingUnicorns;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = it;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -336,6 +389,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		525F79B2233C4932006A5E27 /* GameData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				525F79B3233C4932006A5E27 /* GameData.xcdatamodel */,
+			);
+			currentVersion = 525F79B3233C4932006A5E27 /* GameData.xcdatamodel */;
+			name = GameData.xcdatamodeld;
+			path = "../../../../../Downloads/CPSC 575 Assignemnt 2 Resources/GameData.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5289E479233AE6D20080687A /* Project object */;
 }
