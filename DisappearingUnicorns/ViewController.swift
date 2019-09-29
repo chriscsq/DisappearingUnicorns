@@ -14,6 +14,7 @@ import UIKit
 class ViewController: UIViewController {
 
    
+    @IBOutlet weak var navSettings: UIBarButtonItem!
     @IBOutlet weak var startGameButton: UIButton!
     @IBOutlet weak var leaderboardButton: UIButton!
     @IBOutlet weak var goodButton: UIButton!
@@ -98,7 +99,8 @@ class ViewController: UIViewController {
     func setupFreshGameState() {
         startGameButton.isHidden = false
         leaderboardButton.isHidden = false
-        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+
         for mybutton in gameButtons {
             mybutton.isHidden = true
         }
@@ -132,6 +134,7 @@ class ViewController: UIViewController {
     func startNewGame() {
         startGameButton.isHidden = true
         leaderboardButton.isHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         gamePoints = 0
         updatePointsLabel(gamePoints)
         pointsLabel.textColor = .magenta
