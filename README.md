@@ -1,4 +1,4 @@
-Bugs remaining:
+**Bugs remaining:**
 
 - Closing the settings via done then pressing leaderboard leads to a crash
 - Closing settings via done has incorrect flow
