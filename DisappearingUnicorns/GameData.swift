@@ -49,6 +49,7 @@ internal class GameData : NSObject {
             
             // Check if a player with that name has already been saved and update their high score
             if let savingPlayer = allPlayerData.filter({$0.name == name}).first{
+                print(allPlayerData.first)
                 if savingPlayer.points < points{
                     savingPlayer.points = Int64(points)
                 }
@@ -88,6 +89,44 @@ internal class GameData : NSObject {
             
             // Return a PlayerData representation of the player
             return PlayerData(player: allPlayerData[rank], rank: rank)
+            
+        } catch {
+            print("Unable to fetch player data from CoreData: " + error.localizedDescription)
+            fatalError()
+        }
+    }
+    /*
+    internal func playerData(byName: String) -> PlayerData {
+        do {
+            // Fetch all of the previously saved player data from CoreData and sort it in accending order by points scored
+            var allPlayerData = try context.fetch(Player.fetchRequest()) as! [Player]
+            
+            // Return a PlayerData representation of the player
+            return PlayerData(player: allPlayerData[rank], rank: rank)
+            
+        } catch {
+            print("Unable to fetch player data from CoreData: " + error.localizedDescription)
+            fatalError()
+        }
+    }*/
+    
+    internal func deleteObject(_ nameAtSelectedRow: String) -> Void {
+        do {
+            // Fetch all player data
+            var objectToDelete: NSManagedObject
+            let allPlayerData = try context.fetch(Player.fetchRequest()) as! [Player]
+            for player in allPlayerData {
+                if player.name == nameAtSelectedRow {
+                    objectToDelete = player
+                    print(objectToDelete)
+                    context.delete(objectToDelete)
+                    do {
+                        try context.save()
+                    } catch {
+                        print("Unable to save data to CoreData: " + error.localizedDescription)
+                    }
+                }
+            }
             
         } catch {
             print("Unable to fetch player data from CoreData: " + error.localizedDescription)

@@ -20,4 +20,7 @@ class PlayerData: NSObject {
         self.rank = rank
         self.photo = UIImage(data: player.photo!)
     }
+    
+    
+    
 }

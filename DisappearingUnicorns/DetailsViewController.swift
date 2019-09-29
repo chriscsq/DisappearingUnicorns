@@ -23,7 +23,7 @@ class DetailsViewController: UIViewController {
         if let playerInfo = playerInfo {
             photoView.image = playerInfo.photo
             nameLabel.text = playerInfo.name
-            rankLabel.text = "Rank #\(playerInfo.rank)"
+            rankLabel.text = "Rank #\(playerInfo.rank + 1)"
             pointsLabel.text = "\(playerInfo.points) points"
         }
         // Do any additional setup after loading the view.

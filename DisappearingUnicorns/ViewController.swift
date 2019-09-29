@@ -86,7 +86,11 @@ class ViewController: UIViewController {
         setupFreshGameState()
         
         let gameData = GameData()
-        gameData.savePoints(gamePoints, for: "Chris")
+        
+        // Testing dynamic names
+        //var settings = SettingsViewController()
+       // var name = settings.getName()
+        gameData.savePoints(gamePoints, for: "test")
     }
 
     func setupFreshGameState() {
@@ -137,7 +141,7 @@ class ViewController: UIViewController {
         updatePointsLabel(gamePoints)
         displayRandomButton()
         
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
             if self.state == gameState.playing {
                 if self.currentButton == self.goodButton {
                     self.gameOver()

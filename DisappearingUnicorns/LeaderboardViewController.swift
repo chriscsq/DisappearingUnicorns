@@ -11,6 +11,8 @@ import UIKit
 class LeaderboardViewController: UITableViewController {
     let gameData = GameData()
 
+    var removeUserOnSwipe: IndexPath? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,7 +20,7 @@ class LeaderboardViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -52,17 +54,18 @@ class LeaderboardViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            removeUserOnSwipe = indexPath
+            let playerAtRow = gameData.playerData(forRank: indexPath.row)
+            gameData.deleteObject(playerAtRow.name)
+            tableView.reloadData()
+            
         }    
     }
-    */
+        
 
     /*
     // Override to support rearranging the table view.
