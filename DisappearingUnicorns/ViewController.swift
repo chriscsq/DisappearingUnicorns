@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
         
         // Hiding points label
@@ -88,8 +89,9 @@ class ViewController: UIViewController {
         let gameData = GameData()
         
         // Testing dynamic names
-        //var settings = SettingsViewController()
+       // var settings = SettingsViewController()
        // var name = settings.getName()
+        //print(name)
         gameData.savePoints(gamePoints, for: "test")
     }
 

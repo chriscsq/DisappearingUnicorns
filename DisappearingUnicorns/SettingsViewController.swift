@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var bgSwitch: UISwitch!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var ageField: UITextField!
@@ -27,6 +28,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     }
     
+    @IBAction func donePressed(_ sender: UIBarButtonItem) {
+    }
     @IBAction func isSwitchToggled(_ sender: UISwitch) {
         if sender.isOn {
             bgSwitch.setOn(false, animated:true)
@@ -88,8 +91,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         // For text field
         self.nameField.delegate = self
         self.ageField.delegate = self
-        nameField.text = "testing"
-        
+        doneButton.tintColor = UIColor.red
         
     }
     

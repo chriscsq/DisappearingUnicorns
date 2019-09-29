@@ -49,7 +49,6 @@ internal class GameData : NSObject {
             
             // Check if a player with that name has already been saved and update their high score
             if let savingPlayer = allPlayerData.filter({$0.name == name}).first{
-                print(allPlayerData.first)
                 if savingPlayer.points < points{
                     savingPlayer.points = Int64(points)
                 }
