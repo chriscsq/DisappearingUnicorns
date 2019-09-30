@@ -64,7 +64,7 @@
                                 <rect key="frame" x="0.0" y="141" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="100"/>
-                                <color key="textColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="opaqueSeparatorColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -200,7 +200,7 @@
                                     <segment title="Green"/>
                                     <segment title="Yellow"/>
                                 </segments>
-                                <color key="selectedSegmentTintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="selectedSegmentTintColor" systemColor="systemTealColor" red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="changeBackground:" destination="KrR-QI-dUH" eventType="valueChanged" id="e18-ac-WNC"/>
                                 </connections>
@@ -238,24 +238,30 @@
                                 <rect key="frame" x="240" y="594" width="119" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                <color key="textColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="opaqueSeparatorColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Anz-Xq-K8G">
                                 <rect key="frame" x="162" y="326" width="51" height="30"/>
                                 <state key="normal" title="change"/>
+                                <connections>
+                                    <action selector="changeImagePressed:" destination="KrR-QI-dUH" eventType="touchDown" id="LqG-Yb-Qt7"/>
+                                </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.10000000000000001" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="lDR-Ok-NY5">
+                                <rect key="frame" x="27" y="624" width="334" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="retrieveGameSpeed:" destination="KrR-QI-dUH" eventType="valueChanged" id="Sr7-hL-90v"/>
+                                </connections>
+                            </slider>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1Z-Ss-jhq">
-                                <rect key="frame" x="312" y="491" width="49" height="31"/>
+                                <rect key="frame" x="305" y="496" width="49" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="isSwitchToggled:" destination="KrR-QI-dUH" eventType="valueChanged" id="vDG-7o-ggg"/>
                                 </connections>
                             </switch>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.10000000000000001" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="lDR-Ok-NY5">
-                                <rect key="frame" x="27" y="624" width="334" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -268,21 +274,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cHO-2L-K59"/>
                     </view>
-                    <navigationItem key="navigationItem" id="gcn-ho-E0t">
-                        <barButtonItem key="leftBarButtonItem" title="Done" id="9PG-ln-0hH">
-                            <connections>
-                                <action selector="donePressed:" destination="KrR-QI-dUH" id="Psf-E0-k8R"/>
-                                <segue destination="BYZ-38-t0r" kind="show" id="ZwQ-wp-7ze"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="gcn-ho-E0t"/>
                     <connections>
                         <outlet property="ageField" destination="e79-ni-t10" id="eFI-is-pd0"/>
                         <outlet property="backgroundColorButtons" destination="UJ1-uk-yUf" id="0Qo-ub-Jzx"/>
                         <outlet property="bgSwitch" destination="f1Z-Ss-jhq" id="CzH-Dx-4bx"/>
-                        <outlet property="doneButton" destination="9PG-ln-0hH" id="d7r-LE-vWm"/>
+                        <outlet property="gameSpeedLabel" destination="7jD-5V-yxQ" id="uHo-Cb-FhI"/>
                         <outlet property="gameSpeedSlider" destination="lDR-Ok-NY5" id="SDx-Ub-vWg"/>
                         <outlet property="nameField" destination="rU2-j3-yow" id="Qzr-qd-pT6"/>
+                        <outlet property="profileImage" destination="Mut-hG-6MO" id="uJQ-ST-v5d"/>
                         <outlet property="updateAgeBtn" destination="OHl-Mu-nNR" id="K3I-lF-bZ8"/>
                     </connections>
                 </viewController>
@@ -384,7 +384,4 @@
         <image name="corg" width="499" height="499"/>
         <image name="corg.png" width="499" height="499"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="xu4-tj-aDZ"/>
-    </inferredMetricsTieBreakers>
 </document>

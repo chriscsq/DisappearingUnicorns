@@ -7,29 +7,45 @@
 //
 
 import UIKit
+import Foundation
 
 class SettingsViewController: UIViewController, UITextFieldDelegate {
-
     
-    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
+    var imagePicker = UIImagePickerController()
     @IBOutlet weak var bgSwitch: UISwitch!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var ageField: UITextField!
     @IBOutlet weak var gameSpeedSlider: UISlider!
     @IBOutlet weak var backgroundColorButtons: UISegmentedControl!
     @IBOutlet weak var updateAgeBtn: UIButton!
-    
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var gameSpeedLabel: UILabel!
+        
     var bswitch : Bool = true
     let gameData = GameData()
+    
     // Upon press, should update age and name
     @IBAction func updatePressed(_ sender: Any) {
         
+        // Closes keyboard
         ageField.resignFirstResponder()
-
     }
     
-    @IBAction func donePressed(_ sender: UIBarButtonItem) {
+    @IBAction func retrieveGameSpeed(_ sender: Any) {
+        
+        gameSpeedLabel.text = ("(" + String(format: "%.2f", gameSpeedSlider.value) + " s /round)")
+   
     }
+    
+    
+    @IBAction func changeImagePressed(_ sender:
+        Any) {
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated:true, completion: nil)
+    }
+    
     @IBAction func isSwitchToggled(_ sender: UISwitch) {
         if sender.isOn {
             bgSwitch.setOn(false, animated:true)
@@ -91,8 +107,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         // For text field
         self.nameField.delegate = self
         self.ageField.delegate = self
-        doneButton.tintColor = UIColor.red
-        
+        // Image picker
+        imagePicker.delegate = self
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -112,3 +128,17 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     */
 
 }
+
+extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let selectedImage = info[.editedImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        profileImage.image = selectedImage
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+
