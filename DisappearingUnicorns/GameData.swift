@@ -58,7 +58,7 @@ internal class GameData : NSObject {
                 let savingPlayer = Player(context: context)
                 savingPlayer.name = name
                 savingPlayer.points = Int64(points)
-                savingPlayer.photo = UIImage(named: "corg")!.pngData()
+                savingPlayer.photo = UIImage(named: "person")!.pngData()
             }
         } catch {
             print("Unable to fetch player data from CoreData: " + error.localizedDescription)
@@ -132,4 +132,59 @@ internal class GameData : NSObject {
             fatalError()
         }
     }
+    
+    internal func retrievePlayer() -> [Player] {
+        do {
+            var allPlayerData = try context.fetch(Player.fetchRequest()) as! [Player]
+            //allPlayerData.sort (by: { $0.points > $1.points })
+           
+           // Return a PlayerData representation of the player
+           return allPlayerData
+       } catch {
+           print("Unable to fetch player data from CoreData: " + error.localizedDescription)
+           fatalError()
+       }
+    }
+    
+    internal func savePhoto(_ photoToSave : UIImage) {
+        
+        let savingPlayer = Player(context: context)
+        let photoData = photoToSave.pngData()
+        //                savingPlayer.photo = UIImage(named: "person")!.pngData()
+       
+        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Player", into: context!)
+        newUser.setValue(photoData, forKey: "photo")
+
+       // savingPlayer.photo = photoData
+        //savingPlayer.photo =
+        do {
+            print("Photo saved")
+            try context.save()
+        } catch {
+            print("Unable to save data to CoreData: " + error.localizedDescription)
+        }
+    }
+    /*
+    internal func updateName(_ name: String) {
+        let savingPlayer = Player(context: context)
+        savingPlayer.name = name
+        do {
+            print("name saved")
+            try context.save()
+        } catch {
+            print("Unable to save data to CoreData: " + error.localizedDescription)
+        }
+    }
+    
+    internal func updateAge(_ age: Int) {
+        let savingPlayer = Player(context: context)
+        //savingPlayer = age
+        do {
+            print("int saved")
+            try context.save()
+        } catch {
+            print("Unable to save data to CoreData: " + error.localizedDescription)
+        }
+    }
+ */
 }

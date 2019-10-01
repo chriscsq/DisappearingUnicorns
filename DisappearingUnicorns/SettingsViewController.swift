@@ -24,18 +24,23 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         
     var bswitch : Bool = true
     let gameData = GameData()
+    let userDefault = UserDefaults.standard
+    var sliderDefault: Float!
     
     // Upon press, should update age and name
     @IBAction func updatePressed(_ sender: Any) {
         
         // Closes keyboard
         ageField.resignFirstResponder()
+      //  gameData.savePhoto(profileImage.image!)
+
     }
     
     @IBAction func retrieveGameSpeed(_ sender: Any) {
-        
-        gameSpeedLabel.text = ("(" + String(format: "%.2f", gameSpeedSlider.value) + " s /round)")
-   
+        var speed = String(format: "%.2f", gameSpeedSlider.value)
+        gameSpeedLabel.text = ("(" + speed + " s /round)")
+        userDefault.set(Float(speed), forKey: "speed")
+
     }
     
     
@@ -44,6 +49,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         present(imagePicker, animated:true, completion: nil)
+        
+        // Saving to context
+    
     }
     
     @IBAction func isSwitchToggled(_ sender: UISwitch) {
@@ -97,6 +105,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
         */
     }
+    @IBAction func updateNameField(_ sender: Any) {
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         updateAgeBtn.layer.cornerRadius = 5
@@ -109,10 +120,18 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         self.ageField.delegate = self
         // Image picker
         imagePicker.delegate = self
+        
+        // Setup defaults
+        sliderDefault = userDefault.float(forKey: "speed")
+
+        self.gameSpeedSlider.value = sliderDefault
+        self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
+
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
         return true
     }
     

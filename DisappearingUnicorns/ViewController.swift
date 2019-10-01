@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     var state: gameState?
     var timer : Timer?
     var currentButton : UIButton!
+    let userDefault = UserDefaults.standard
+    var sliderDefault: Double = 1.0
     
     enum gameState {
         
@@ -90,10 +92,16 @@ class ViewController: UIViewController {
         let gameData = GameData()
         
         // Testing dynamic names
-       // var settings = SettingsViewController()
-       // var name = settings.getName()
-        //print(name)
-        gameData.savePoints(gamePoints, for: "test")
+        //if let savingPlayer = allPlayerData.filter({$0.name == name}).first
+
+       gameData.savePoints(gamePoints, for: "name")
+        
+        /*  need a default condition, bug right now is if there is a deleted user*/
+        
+        //if gameData.playerData(forRank: 0) == nul
+        //let savingPlayer = gameData.playerData(forRank: 0)
+        //gameData.savePoints(gamePoints, for: savingPlayer.name)
+        
     }
 
     func setupFreshGameState() {
@@ -106,7 +114,7 @@ class ViewController: UIViewController {
         }
         pointsLabel.alpha = 0.15
         currentButton = goodButton
-        state = gameState.playing
+        state = gameState.gameover
         
     }
     func randCGFloat(_ min: CGFloat, _ max: CGFloat) -> CGFloat{
@@ -139,14 +147,17 @@ class ViewController: UIViewController {
         updatePointsLabel(gamePoints)
         pointsLabel.textColor = .magenta
         pointsLabel.isHidden = false
+        state = gameState.playing
         oneGameRound()
     }
     
     func oneGameRound() {
         updatePointsLabel(gamePoints)
         displayRandomButton()
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+        /* Testing user default */
+        sliderDefault = userDefault.double(forKey: "speed")
+
+        timer = Timer.scheduledTimer(withTimeInterval: sliderDefault, repeats: false) { _ in
             if self.state == gameState.playing {
                 if self.currentButton == self.goodButton {
                     self.gameOver()
