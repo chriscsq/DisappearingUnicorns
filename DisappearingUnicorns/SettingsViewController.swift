@@ -21,20 +21,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var updateAgeBtn: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var gameSpeedLabel: UILabel!
-        
+    @IBOutlet weak var ageLabel: UILabel!
+    
     var bswitch : Bool = true
     let gameData = GameData()
     let userDefault = UserDefaults.standard
     var sliderDefault: Float!
-    
-    // Upon press, should update age and name
-    @IBAction func updatePressed(_ sender: Any) {
-        
-        // Closes keyboard
-        ageField.resignFirstResponder()
-      //  gameData.savePhoto(profileImage.image!)
 
-    }
     
     @IBAction func retrieveGameSpeed(_ sender: Any) {
         var speed = String(format: "%.2f", gameSpeedSlider.value)
@@ -106,7 +99,30 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         */
     }
     @IBAction func updateNameField(_ sender: Any) {
+
+    }
+
+    @IBAction func clearAgeField(_ sender: Any) {
+        ageField.placeholder = nil;
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+    }
+    
+    // Upon press, should update age and name
+    @IBAction func updatePressed(_ sender: Any) {
         
+        // Closes keyboard
+        //ageField.resignFirstResponder()
+      //  gameData.savePhoto(profileImage.image!)
+        ageField.resignFirstResponder()
+        guard let age = Int(ageField.text!) else {
+            print("Not updating age")
+            return
+        }
+        userDefault.set(Int(age), forKey: "age")
+        self.ageLabel.text = ("age: " + "\(age)")
+        // Need to have a popup now
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,23 +134,29 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         // For text field
         self.nameField.delegate = self
         self.ageField.delegate = self
+        let nameString = NSAttributedString.init(string: "Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+
+        let updateAgeString = NSAttributedString.init(string: "Update age here", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+        nameField.attributedPlaceholder = nameString
+        ageField.attributedPlaceholder = updateAgeString
+
         // Image picker
         imagePicker.delegate = self
         
-        // Setup defaults
+        // Setup defaultsx
         sliderDefault = userDefault.float(forKey: "speed")
-
+        let age = userDefault.integer(forKey: "age")
+        self.ageLabel.text = ("age: " + "\(age)")
         self.gameSpeedSlider.value = sliderDefault
         self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
 
     }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        
+    /*
+    func hideAgeKeyboard() {
+        ageField.resignFirstResponder()
         return true
     }
-    
+    */
 
     /*
     // MARK: - Navigation
