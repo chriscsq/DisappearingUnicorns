@@ -24,6 +24,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var bgCircle: UIImageView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var whiteCircle: UIImageView!
     
 
     let gameData = GameData()
@@ -37,7 +38,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     }
     
-    
+    /* Goes into photo library, lets you choose image and then sets the default to whatever was chosen */
     @IBAction func changeImagePressed(_ sender:
         Any) {
         imagePicker.sourceType = .photoLibrary
@@ -56,22 +57,16 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             bgSwitch.setOn(true, animated:true)
             let paleRed = UIColor(rgb: 0xff8080)
             userDefault.set(paleRed, forKey: "bgColor")
-
+            whiteCircle.isHidden = true
+            bgCircle.isHidden = false
         } else {
             userDefault.set(false, forKey: "switch")
             bgSwitch.setOn(false, animated:true)
             userDefault.set(UIColor.white, forKey: "bgColor")
+            whiteCircle.isHidden = false
+            bgCircle.isHidden = true
         }
     }
-    
-    // getter for namefield
-    func getName() -> String {
-        //let nameText: String! = nameField.text!
-        //print(nameText)
-       // print(nameField.text)
-        return "testing"
-    }
-    
     
     /* Controls background color, checks to see if the UISwitch is toggled
      * If UISwitch == True -> Switches background colors to selected color
@@ -86,8 +81,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             case 0:
                 let paleRed = UIColor(rgb: 0xff8080)
                 userDefault.set(paleRed, forKey: "bgColor")
-                userDefault.set(paleRed, forKey: "bgColor")
-                self.bgCircle?.changePngColorTo(color: UIColor.black)                //circle.tintColor = paleRed
+                self.bgCircle?.tintColor = paleRed
             // Blue switch
             case 1:
                 let paleBlue = UIColor(rgb: 0xccffff)
@@ -119,17 +113,20 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func updateNameField(_ sender: Any) {
+        
+        if nameField.isFirstResponder == true {
+            nameField.placeholder = nil
+        }
 
     }
-
+ 
     @IBAction func clearAgeField(_ sender: Any) {
-        ageField.placeholder = nil;
+        ageField.placeholder = nil
     }
     
-    func
-        textFieldDidBeginEditing(_ textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
     }
-    
+ 
     /* Updates age from the ageFieldTextField into the ageLabel
      * User gets an alert for if they would like to update, they can confirm or cancel
      */
@@ -175,7 +172,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         self.nameField.delegate = self
         self.ageField.delegate = self
         
-        let nameString = NSAttributedString.init(string: "Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
+        let nameString = NSAttributedString.init(string: "Your Name Here", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
 
         let updateAgeString = NSAttributedString.init(string: "Update age here", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         nameField.attributedPlaceholder = nameString
@@ -193,24 +190,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         self.nameField.text = (userDefault.string(forKey: "name"))
         self.profileImage.image = UIImage(data: (UserDefaults.standard.object(forKey: "profileImage") as! Data))
         
+        /* Decide which bg color to display */
+        if userDefault.bool(forKey: "switch") {
+            bgCircle.isHidden = false
+            whiteCircle.isHidden = true
+        } else {
+            bgCircle.isHidden = true
+            whiteCircle.isHidden = false
+        }
     }
-    /*
-    func hideAgeKeyboard() {
-        ageField.resignFirstResponder()
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using xsegue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -243,13 +231,3 @@ extension UIColor {
        )
    }
 }
-
-extension UIImageView{
-    func changePngColorTo(color: UIColor){
-        guard let image =  self.image else {return}
-        self.image = image.withRenderingMode(.alwaysTemplate)
-        self.tintColor = color
-    }
-}
-
-

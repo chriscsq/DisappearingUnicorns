@@ -7,8 +7,6 @@ class PlayerData: NSObject {
     var points: Int
     var rank:Int
     var photo:UIImage?
-    var gameSpeed:Float?
-    var age:Int?
     
     init(name:String, points:Int, rank:Int, photo:UIImage?) {
         self.name = name
@@ -21,7 +19,6 @@ class PlayerData: NSObject {
         self.points = Int(player.points)
         self.rank = rank
         self.photo = UIImage(data: player.photo!)
-        //self.GameSpeed float(player.game)
     }
     
     

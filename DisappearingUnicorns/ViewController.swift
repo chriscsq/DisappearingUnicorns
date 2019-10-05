@@ -44,10 +44,6 @@ class ViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       // let newColor = userDefault.colorForKey(key: "bgColor")
-        //self.view.backgroundColor = newColor
-        // Do any additional setup after loading the view.
-        
         // Hiding points label
         pointsLabel.isHidden = true
         gameButtons = [goodButton, badButton]
@@ -107,13 +103,6 @@ class ViewController: UIViewController {
             return
         }
         gameData.savePoints(gamePoints, for: name, profileImage: profilePicture)
-        
-        /*  need a default condition, bug right now is if there is a deleted user*/
-        
-        //if gameData.playerData(forRank: 0) == nul
-        //let savingPlayer = gameData.playerData(forRank: 0)
-        //gameData.savePoints(gamePoints, for: savingPlayer.name)
-        
     }
 
     func setupFreshGameState() {

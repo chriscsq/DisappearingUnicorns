@@ -147,46 +147,4 @@ internal class GameData : NSObject {
            fatalError()
        }
     }
-    
-    internal func savePhoto(_ photoToSave : UIImage) {
-        
-        let savingPlayer = Player(context: context)
-        let photoData = photoToSave.pngData()
-        //savingPlayer.photo = UIImage(named: "person")!.pngData()
-       
-        //let newUser = NSEntityDescription.insertNewObject(forEntityName: "Player", into: context!)
-        //newUser.setValue(photoData, forKey: "photo")
-
-       savingPlayer.photo = photoData
-        //savingPlayer.photo =
-        do {
-            print("Photo saved")
-            try context.save()
-        } catch {
-            print("Unable to save data to CoreData: " + error.localizedDescription)
-        }
-    }
-    /*
-    internal func updateName(_ name: String) {
-        let savingPlayer = Player(context: context)
-        savingPlayer.name = name
-        do {
-            print("name saved")
-            try context.save()
-        } catch {
-            print("Unable to save data to CoreData: " + error.localizedDescription)
-        }
-    }
-    
-    internal func updateAge(_ age: Int) {
-        let savingPlayer = Player(context: context)
-        //savingPlayer = age
-        do {
-            print("int saved")
-            try context.save()
-        } catch {
-            print("Unable to save data to CoreData: " + error.localizedDescription)
-        }
-    }
- */
 }

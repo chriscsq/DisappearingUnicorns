@@ -272,8 +272,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1Z-Ss-jhq">
-                                <rect key="frame" x="310" y="491" width="51" height="31"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6qv-za-osg">
+                                <rect key="frame" x="194" y="497.5" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1Z-Ss-jhq">
+                                <rect key="frame" x="310" y="492" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="isSwitchToggled:" destination="KrR-QI-dUH" eventType="valueChanged" id="vDG-7o-ggg"/>
                                 </connections>
@@ -287,7 +293,6 @@
                             <constraint firstItem="Anz-Xq-K8G" firstAttribute="centerX" secondItem="hNZ-Ed-kB9" secondAttribute="centerX" id="BGE-0d-eHp"/>
                             <constraint firstItem="Anz-Xq-K8G" firstAttribute="top" secondItem="Mut-hG-6MO" secondAttribute="bottom" constant="7" id="P5L-et-y8f"/>
                             <constraint firstItem="k23-qG-cl6" firstAttribute="top" secondItem="Anz-Xq-K8G" secondAttribute="bottom" constant="7" id="Zh0-p9-AJN"/>
-                            <constraint firstItem="cHO-2L-K59" firstAttribute="trailing" secondItem="f1Z-Ss-jhq" secondAttribute="trailing" constant="55" id="mwh-1w-EC9"/>
                             <constraint firstItem="Mut-hG-6MO" firstAttribute="top" secondItem="cHO-2L-K59" secondAttribute="top" constant="81" id="sPO-Oy-PZl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cHO-2L-K59"/>
@@ -304,6 +309,7 @@
                         <outlet property="ageField" destination="e79-ni-t10" id="eFI-is-pd0"/>
                         <outlet property="ageLabel" destination="k23-qG-cl6" id="q88-yr-wmR"/>
                         <outlet property="backgroundColorButtons" destination="UJ1-uk-yUf" id="0Qo-ub-Jzx"/>
+                        <outlet property="bgCircle" destination="FgZ-Ad-lGt" id="Hc9-cT-2vD"/>
                         <outlet property="bgSwitch" destination="f1Z-Ss-jhq" id="CzH-Dx-4bx"/>
                         <outlet property="doneButton" destination="8z6-AA-gjC" id="slU-SC-8zu"/>
                         <outlet property="gameSpeedLabel" destination="7jD-5V-yxQ" id="uHo-Cb-FhI"/>
@@ -311,6 +317,7 @@
                         <outlet property="nameField" destination="rU2-j3-yow" id="Qzr-qd-pT6"/>
                         <outlet property="profileImage" destination="Mut-hG-6MO" id="uJQ-ST-v5d"/>
                         <outlet property="updateAgeBtn" destination="OHl-Mu-nNR" id="K3I-lF-bZ8"/>
+                        <outlet property="whiteCircle" destination="6qv-za-osg" id="ElB-p6-nmJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1n4-Nm-T71" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -408,6 +415,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="circle" catalog="system" width="64" height="62"/>
         <image name="circle.fill" catalog="system" width="64" height="62"/>
         <image name="corg.png" width="499" height="499"/>
         <image name="person.png" width="512" height="512"/>
