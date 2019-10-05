@@ -23,6 +23,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var gameSpeedLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var bgCircle: UIImageView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
 
     let gameData = GameData()
@@ -42,9 +43,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         present(imagePicker, animated:true, completion: nil)
-        
-        // Saving to context
-    
+        userDefault.set(profileImage.image?.pngData(), forKey: "profileImage")
     }
     
     /* UISwitch - Lets you see if User decides to change background color
@@ -127,7 +126,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         ageField.placeholder = nil;
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    func
+        textFieldDidBeginEditing(_ textField: UITextField) {
     }
     
     /* Updates age from the ageFieldTextField into the ageLabel
@@ -135,18 +135,32 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
      */
     @IBAction func updatePressed(_ sender: Any) {
         
-        // Closes keyboard
-        //ageField.resignFirstResponder()
-      //  gameData.savePhoto(profileImage.image!)
         ageField.resignFirstResponder()
         guard let age = Int(ageField.text!) else {
             print("Not updating age")
             return
         }
-        userDefault.set(Int(age), forKey: "age")
-        self.ageLabel.text = ("age: " + "\(age)")
-        // Need to have a popup now
-        gameData.savePhoto(profileImage.image!)
+
+        /* User to confirm update */
+        let confirmUpdate = UIAlertController(title: "Update Age", message: "Are you sure you want to update the player age to \(age)", preferredStyle: .alert)
+
+       confirmUpdate.addAction(UIAlertAction(title: "Update", style: .cancel, handler: { (handler) in (
+        self.userDefault.set(Int(age), forKey: "age"),
+            self.ageLabel.text = ("age: " + "\(age)")
+       )}))
+        
+        confirmUpdate.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+        self.present(confirmUpdate, animated: true)
+
+    }
+
+    /* Go back to main view and save name + image */
+    @IBAction func donePressed(_ sender: UIBarButtonItem) {
+        userDefault.set(nameField.text, forKey: "name")
+      // userDefault.set(profileImage, forKey:"profileImage")
+        _ = navigationController?.popToRootViewController(animated: true)
+        userDefault.set(profileImage.image?.pngData(), forKey: "profileImage")
     }
     
     /* Loading settings page */
@@ -160,23 +174,24 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         // For text field
         self.nameField.delegate = self
         self.ageField.delegate = self
+        
         let nameString = NSAttributedString.init(string: "Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
 
         let updateAgeString = NSAttributedString.init(string: "Update age here", attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
         nameField.attributedPlaceholder = nameString
         ageField.attributedPlaceholder = updateAgeString
-
+        
         // Image picker
         imagePicker.delegate = self
         
         // Setup defaults
         sliderDefault = userDefault.float(forKey: "speed")
-        let age = userDefault.integer(forKey: "age")
-        self.ageLabel.text = ("age: " + "\(age)")
+        self.ageLabel.text = ("age: " + "\(userDefault.integer(forKey: "age"))")
         self.gameSpeedSlider.value = sliderDefault
         self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
         self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
-
+        self.nameField.text = (userDefault.string(forKey: "name"))
+        self.profileImage.image = UIImage(data: (UserDefaults.standard.object(forKey: "profileImage") as! Data))
         
     }
     /*

@@ -42,7 +42,7 @@ internal class GameData : NSObject {
             - points: The number of points scored by the player
             - name: The name of the player to update on the leaderboard
          */
-    internal func savePoints(_ points: Int, for name:String){
+    internal func savePoints(_ points: Int, for name:String,  profileImage:Data){
         do {
             // Fetch all of the previously saved player data from CoreData
             let allPlayerData =  try context.fetch(Player.fetchRequest()) as! [Player]
@@ -51,6 +51,7 @@ internal class GameData : NSObject {
             if let savingPlayer = allPlayerData.filter({$0.name == name}).first{
                 if savingPlayer.points < points{
                     savingPlayer.points = Int64(points)
+                    savingPlayer.photo = profileImage
                 }
             }
             // Otherwise, if the player is new, create a new entry in CoreData
@@ -58,7 +59,8 @@ internal class GameData : NSObject {
                 let savingPlayer = Player(context: context)
                 savingPlayer.name = name
                 savingPlayer.points = Int64(points)
-                savingPlayer.photo = UIImage(named: "person")!.pngData()
+                //savingPlayer.photo = UIImage(named: "person")!.pngData()
+                savingPlayer.photo = profileImage
             }
         } catch {
             print("Unable to fetch player data from CoreData: " + error.localizedDescription)

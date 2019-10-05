@@ -101,10 +101,12 @@ class ViewController: UIViewController {
         
         let gameData = GameData()
         
-        // Testing dynamic names
-        //if let savingPlayer = allPlayerData.filter({$0.name == name}).first
-
-       gameData.savePoints(gamePoints, for: "name")
+        guard let name = userDefault.string(forKey: "name"), let profilePicture = userDefault.data(forKey: "profileImage") else {
+            gameData.savePoints(gamePoints, for: "Person", profileImage: (UIImage(named: "person")!.pngData()!))
+    
+            return
+        }
+        gameData.savePoints(gamePoints, for: name, profileImage: profilePicture)
         
         /*  need a default condition, bug right now is if there is a deleted user*/
         
@@ -164,9 +166,9 @@ class ViewController: UIViewController {
     func oneGameRound() {
         updatePointsLabel(gamePoints)
         displayRandomButton()
-        /* Testing user default */
+        
+        /* Loading preferred slider values */
         sliderDefault = userDefault.double(forKey: "speed")
-
         timer = Timer.scheduledTimer(withTimeInterval: sliderDefault, repeats: false) { _ in
             if self.state == gameState.playing {
                 if self.currentButton == self.goodButton {

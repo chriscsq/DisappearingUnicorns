@@ -167,11 +167,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
-                                        <color key="value" systemColor="systemPurpleColor" red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="updateNameField:" destination="KrR-QI-dUH" eventType="editingDidEnd" id="5ei-OX-tgF"/>
                                 </connections>
@@ -183,14 +178,6 @@
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color">
-                                        <string key="keyPath">_placeholderLabel.textColor
-
-_placeholderLabel.textColor</string>
-                                        <color key="value" systemColor="systemPurpleColor" red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Background Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yh2-Hg-mnI">
                                 <rect key="frame" x="29" y="496" width="147" height="21"/>
@@ -259,7 +246,13 @@ _placeholderLabel.textColor</string>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Anz-Xq-K8G">
                                 <rect key="frame" x="181.5" y="326" width="51" height="30"/>
-                                <state key="normal" title="change"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Cfx-nK-8gp"/>
+                                    <constraint firstAttribute="width" constant="51" id="FUA-Pg-9aq"/>
+                                </constraints>
+                                <state key="normal" title="change">
+                                    <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="changeImagePressed:" destination="KrR-QI-dUH" eventType="touchDown" id="LqG-Yb-Qt7"/>
                                 </connections>
@@ -267,6 +260,9 @@ _placeholderLabel.textColor</string>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.10000000000000001" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="lDR-Ok-NY5">
                                 <rect key="frame" x="27" y="624" width="334" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="minimumTrackTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="maximumTrackTintColor" systemColor="systemTealColor" red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="thumbTintColor" systemColor="systemOrangeColor" red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="retrieveGameSpeed:" destination="KrR-QI-dUH" eventType="valueChanged" id="Sr7-hL-90v"/>
                                 </connections>
@@ -276,9 +272,8 @@ _placeholderLabel.textColor</string>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1Z-Ss-jhq">
-                                <rect key="frame" x="312" y="491" width="49" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1Z-Ss-jhq">
+                                <rect key="frame" x="310" y="491" width="51" height="31"/>
                                 <connections>
                                     <action selector="isSwitchToggled:" destination="KrR-QI-dUH" eventType="valueChanged" id="vDG-7o-ggg"/>
                                 </connections>
@@ -292,16 +287,25 @@ _placeholderLabel.textColor</string>
                             <constraint firstItem="Anz-Xq-K8G" firstAttribute="centerX" secondItem="hNZ-Ed-kB9" secondAttribute="centerX" id="BGE-0d-eHp"/>
                             <constraint firstItem="Anz-Xq-K8G" firstAttribute="top" secondItem="Mut-hG-6MO" secondAttribute="bottom" constant="7" id="P5L-et-y8f"/>
                             <constraint firstItem="k23-qG-cl6" firstAttribute="top" secondItem="Anz-Xq-K8G" secondAttribute="bottom" constant="7" id="Zh0-p9-AJN"/>
+                            <constraint firstItem="cHO-2L-K59" firstAttribute="trailing" secondItem="f1Z-Ss-jhq" secondAttribute="trailing" constant="55" id="mwh-1w-EC9"/>
                             <constraint firstItem="Mut-hG-6MO" firstAttribute="top" secondItem="cHO-2L-K59" secondAttribute="top" constant="81" id="sPO-Oy-PZl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cHO-2L-K59"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Settings" id="gcn-ho-E0t"/>
+                    <navigationItem key="navigationItem" title="Settings" id="gcn-ho-E0t">
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="8z6-AA-gjC">
+                            <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="donePressed:" destination="KrR-QI-dUH" id="kAD-eN-HPQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="ageField" destination="e79-ni-t10" id="eFI-is-pd0"/>
                         <outlet property="ageLabel" destination="k23-qG-cl6" id="q88-yr-wmR"/>
                         <outlet property="backgroundColorButtons" destination="UJ1-uk-yUf" id="0Qo-ub-Jzx"/>
                         <outlet property="bgSwitch" destination="f1Z-Ss-jhq" id="CzH-Dx-4bx"/>
+                        <outlet property="doneButton" destination="8z6-AA-gjC" id="slU-SC-8zu"/>
                         <outlet property="gameSpeedLabel" destination="7jD-5V-yxQ" id="uHo-Cb-FhI"/>
                         <outlet property="gameSpeedSlider" destination="lDR-Ok-NY5" id="SDx-Ub-vWg"/>
                         <outlet property="nameField" destination="rU2-j3-yow" id="Qzr-qd-pT6"/>
