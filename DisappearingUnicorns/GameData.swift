@@ -150,12 +150,12 @@ internal class GameData : NSObject {
         
         let savingPlayer = Player(context: context)
         let photoData = photoToSave.pngData()
-        //                savingPlayer.photo = UIImage(named: "person")!.pngData()
+        //savingPlayer.photo = UIImage(named: "person")!.pngData()
        
-        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Player", into: context!)
-        newUser.setValue(photoData, forKey: "photo")
+        //let newUser = NSEntityDescription.insertNewObject(forEntityName: "Player", into: context!)
+        //newUser.setValue(photoData, forKey: "photo")
 
-       // savingPlayer.photo = photoData
+       savingPlayer.photo = photoData
         //savingPlayer.photo =
         do {
             print("Photo saved")

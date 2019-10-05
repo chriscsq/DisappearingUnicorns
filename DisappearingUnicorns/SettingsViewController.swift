@@ -22,15 +22,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var gameSpeedLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var bgCircle: UIImageView!
     
-    var bswitch : Bool = true
+
     let gameData = GameData()
     let userDefault = UserDefaults.standard
     var sliderDefault: Float!
-
     
     @IBAction func retrieveGameSpeed(_ sender: Any) {
-        var speed = String(format: "%.2f", gameSpeedSlider.value)
+        let speed = String(format: "%.2f", gameSpeedSlider.value)
         gameSpeedLabel.text = ("(" + speed + " s /round)")
         userDefault.set(Float(speed), forKey: "speed")
 
@@ -47,13 +47,21 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     }
     
+    /* UISwitch - Lets you see if User decides to change background color
+     * If true -> Sets global default to true
+     * If false -> Sets global default to false
+     */
     @IBAction func isSwitchToggled(_ sender: UISwitch) {
         if sender.isOn {
-            bgSwitch.setOn(false, animated:true)
-            bswitch = true
+            userDefault.set(true, forKey: "switch")
+            bgSwitch.setOn(true, animated:true)
+            let paleRed = UIColor(rgb: 0xff8080)
+            userDefault.set(paleRed, forKey: "bgColor")
+
         } else {
+            userDefault.set(false, forKey: "switch")
             bgSwitch.setOn(false, animated:true)
-            bswitch = false
+            userDefault.set(UIColor.white, forKey: "bgColor")
         }
     }
     
@@ -65,39 +73,52 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         return "testing"
     }
     
-    /*
-    @IBAction func isSwitchToggled(_ sender: UISwitch) {
-        if sender.isOn {
-            backgroundSwitch.setOn(false, animated:true)
-            bswitch = true
-        } else {
-            backgroundSwitch.setOn(false, animated:true)
-            bswitch = false
-        }
-    }
-    */
     
-    // Segmented control
+    /* Controls background color, checks to see if the UISwitch is toggled
+     * If UISwitch == True -> Switches background colors to selected color
+     * If UISwitch == False -> Stays white
+     */
+    
     @IBAction func changeBackground(_ sender: Any) {
-        /*
-        if bswitch {
+        
+        if userDefault.bool(forKey: "switch") {
             switch backgroundColorButtons.selectedSegmentIndex {
+            // Red switch
             case 0:
-                print("red")
+                let paleRed = UIColor(rgb: 0xff8080)
+                userDefault.set(paleRed, forKey: "bgColor")
+                userDefault.set(paleRed, forKey: "bgColor")
+                self.bgCircle?.changePngColorTo(color: UIColor.black)                //circle.tintColor = paleRed
+            // Blue switch
             case 1:
-                print("blue")
+                let paleBlue = UIColor(rgb: 0xccffff)
+                userDefault.set(paleBlue, forKey: "bgColor")
+                print("swapping to blue")
+                self.bgCircle?.tintColor = paleBlue
+            
+            // Green switch
+            case 2:
+                let paleGreen = UIColor(rgb: 0xcdffc5)
+                userDefault.set(paleGreen, forKey: "bgColor")
+                print("swapping to green")
+                bgCircle?.tintColor = paleGreen
+                
+            // Yellow switch
             case 3:
-                print("green")
-            case 4:
-                print("yellow")
+                let paleYellow = UIColor(rgb: 0xffffcc)
+                userDefault.set(paleYellow, forKey: "bgColor")
+                print("swapping to yellow")
+                bgCircle?.tintColor = paleYellow
             default:
                 break
             }
         } else {
-            print("Switch is off")
+            userDefault.set(UIColor.white, forKey: "bgColor")
+
         }
-        */
+        
     }
+    
     @IBAction func updateNameField(_ sender: Any) {
 
     }
@@ -109,7 +130,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
     }
     
-    // Upon press, should update age and name
+    /* Updates age from the ageFieldTextField into the ageLabel
+     * User gets an alert for if they would like to update, they can confirm or cancel
+     */
     @IBAction func updatePressed(_ sender: Any) {
         
         // Closes keyboard
@@ -123,7 +146,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         userDefault.set(Int(age), forKey: "age")
         self.ageLabel.text = ("age: " + "\(age)")
         // Need to have a popup now
+        gameData.savePhoto(profileImage.image!)
     }
+    
+    /* Loading settings page */
     override func viewDidLoad() {
         super.viewDidLoad()
         updateAgeBtn.layer.cornerRadius = 5
@@ -143,13 +169,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         // Image picker
         imagePicker.delegate = self
         
-        // Setup defaultsx
+        // Setup defaults
         sliderDefault = userDefault.float(forKey: "speed")
         let age = userDefault.integer(forKey: "age")
         self.ageLabel.text = ("age: " + "\(age)")
         self.gameSpeedSlider.value = sliderDefault
         self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
+        self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
 
+        
     }
     /*
     func hideAgeKeyboard() {
@@ -163,7 +191,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
+        // Get the new view controller using xsegue.destination.
         // Pass the selected object to the new view controller.
     }
     */
@@ -179,6 +207,33 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
         }
         profileImage.image = selectedImage
         dismiss(animated: true, completion: nil)
+    }
+}
+
+// - Cite https://stackoverflow.com/questions/24263007/how-to-use-hex-color-values
+extension UIColor {
+   convenience init(red: Int, green: Int, blue: Int) {
+       assert(red >= 0 && red <= 255, "Invalid red component")
+       assert(green >= 0 && green <= 255, "Invalid green component")
+       assert(blue >= 0 && blue <= 255, "Invalid blue component")
+
+       self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+   }
+
+   convenience init(rgb: Int) {
+       self.init(
+           red: (rgb >> 16) & 0xFF,
+           green: (rgb >> 8) & 0xFF,
+           blue: rgb & 0xFF
+       )
+   }
+}
+
+extension UIImageView{
+    func changePngColorTo(color: UIColor){
+        guard let image =  self.image else {return}
+        self.image = image.withRenderingMode(.alwaysTemplate)
+        self.tintColor = color
     }
 }
 

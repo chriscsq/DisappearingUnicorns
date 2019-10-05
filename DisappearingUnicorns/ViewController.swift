@@ -35,15 +35,25 @@ class ViewController: UIViewController {
         case playing
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // Here I'm going to change the background color
+        let newColor = userDefault.color(forKey: "bgColor")
+        self.view.backgroundColor = newColor
+
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       // let newColor = userDefault.colorForKey(key: "bgColor")
+        //self.view.backgroundColor = newColor
         // Do any additional setup after loading the view.
         
         // Hiding points label
         pointsLabel.isHidden = true
         gameButtons = [goodButton, badButton]
-        
+        let newColor = userDefault.color(forKey: "bgColor")
+        self.view.backgroundColor = newColor
+
         setupFreshGameState()
         print("... GameState loaded")
     }
@@ -173,3 +183,31 @@ class ViewController: UIViewController {
     
 }
 
+extension UserDefaults {
+
+    func color(forKey key: String) -> UIColor? {
+
+        guard let colorData = data(forKey: key) else { return nil }
+
+        do {
+            return try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: colorData)
+        } catch let error {
+            print("color error \(error.localizedDescription)")
+            return nil
+        }
+
+    }
+
+    func set(_ value: UIColor?, forKey key: String) {
+
+        guard let color = value else { return }
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)
+            set(data, forKey: key)
+        } catch let error {
+            print("error color key data not saved \(error.localizedDescription)")
+        }
+
+    }
+
+}
