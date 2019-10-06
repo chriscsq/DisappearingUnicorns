@@ -37,8 +37,12 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // Here I'm going to change the background color
-        let newColor = userDefault.color(forKey: "bgColor")
-        self.view.backgroundColor = newColor
+        if UserDefaults.exists(key: "bgColor") {
+            let newColor = userDefault.color(forKey: "bgColor")
+            self.view.backgroundColor = newColor
+        } else {
+            self.view.backgroundColor = UIColor.white
+        }
 
         
     }
@@ -47,8 +51,13 @@ class ViewController: UIViewController {
         // Hiding points label
         pointsLabel.isHidden = true
         gameButtons = [goodButton, badButton]
-        let newColor = userDefault.color(forKey: "bgColor")
-        self.view.backgroundColor = newColor
+        
+        if UserDefaults.exists(key: "bgColor") {
+            let newColor = userDefault.color(forKey: "bgColor")
+            self.view.backgroundColor = newColor
+        } else {
+            self.view.backgroundColor = UIColor.white
+        }
 
         setupFreshGameState()
         print("... GameState loaded")
@@ -57,7 +66,6 @@ class ViewController: UIViewController {
     // Action muthod for whenever button is pressed
     @IBAction func startPressed(_ sender: Any) {
         startNewGame()
-        print("Start pressed")
     }
     
     @IBAction func goodPressed(_ sender: Any) {
@@ -66,7 +74,6 @@ class ViewController: UIViewController {
         goodButton.isHidden = true
         timer?.invalidate()
         oneGameRound()
-        print("Good pressed")
     }
     
     @IBAction func badPressed(_ sender: Any) {
@@ -99,7 +106,6 @@ class ViewController: UIViewController {
         
         guard let name = userDefault.string(forKey: "name"), let profilePicture = userDefault.data(forKey: "profileImage") else {
             gameData.savePoints(gamePoints, for: "Person", profileImage: (UIImage(named: "person")!.pngData()!))
-    
             return
         }
         gameData.savePoints(gamePoints, for: name, profileImage: profilePicture)
@@ -157,7 +163,12 @@ class ViewController: UIViewController {
         displayRandomButton()
         
         /* Loading preferred slider values */
-        sliderDefault = userDefault.double(forKey: "speed")
+        if UserDefaults.exists(key: "speed") {
+            sliderDefault = userDefault.double(forKey: "speed")
+        } else {
+            sliderDefault = 1.0
+        }
+        
         timer = Timer.scheduledTimer(withTimeInterval: sliderDefault, repeats: false) { _ in
             if self.state == gameState.playing {
                 if self.currentButton == self.goodButton {
@@ -200,5 +211,7 @@ extension UserDefaults {
         }
 
     }
+    
+    
 
 }

@@ -88,7 +88,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                 userDefault.set(paleBlue, forKey: "bgColor")
                 print("swapping to blue")
                 self.bgCircle?.tintColor = paleBlue
-            
+                
             // Green switch
             case 2:
                 let paleGreen = UIColor(rgb: 0xcdffc5)
@@ -103,7 +103,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                 print("swapping to yellow")
                 bgCircle?.tintColor = paleYellow
             default:
-                break
+                // Resting on the red switch
+                let paleRed = UIColor(rgb: 0xff8080)
+                userDefault.set(paleRed, forKey: "bgColor")
+                self.bgCircle?.tintColor = paleRed
             }
         } else {
             userDefault.set(UIColor.white, forKey: "bgColor")
@@ -111,9 +114,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
-    
+
+
     @IBAction func updateNameField(_ sender: Any) {
-        
         if nameField.isFirstResponder == true {
             nameField.placeholder = nil
         }
@@ -124,7 +127,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         ageField.placeholder = nil
     }
     
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        nameField.text = nil
+    }
+ 
+    func textFieldShouldReturn(_ textField: UITextField!) -> Bool {
+        userDefault.set(nameField.text, forKey: "name")
+        nameField.resignFirstResponder()
+        return true;
     }
  
     /* Updates age from the ageFieldTextField into the ageLabel
@@ -141,17 +152,18 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         /* User to confirm update */
         let confirmUpdate = UIAlertController(title: "Update Age", message: "Are you sure you want to update the player age to \(age)", preferredStyle: .alert)
 
-       confirmUpdate.addAction(UIAlertAction(title: "Update", style: .cancel, handler: { (handler) in (
+       confirmUpdate.addAction(UIAlertAction(title: "Update", style: .default, handler: { (handler) in (
         self.userDefault.set(Int(age), forKey: "age"),
             self.ageLabel.text = ("age: " + "\(age)")
        )}))
         
-        confirmUpdate.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        confirmUpdate.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         self.present(confirmUpdate, animated: true)
 
     }
 
+    
     /* Go back to main view and save name + image */
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
         userDefault.set(nameField.text, forKey: "name")
@@ -182,13 +194,36 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         imagePicker.delegate = self
         
         // Setup defaults
-        sliderDefault = userDefault.float(forKey: "speed")
+
+        /*
         self.ageLabel.text = ("age: " + "\(userDefault.integer(forKey: "age"))")
         self.gameSpeedSlider.value = sliderDefault
         self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
         self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
         self.nameField.text = (userDefault.string(forKey: "name"))
         self.profileImage.image = UIImage(data: (UserDefaults.standard.object(forKey: "profileImage") as! Data))
+        */
+        
+        if UserDefaults.exists(key: "age") {
+            self.ageLabel.text = ("age: " + "\(userDefault.integer(forKey: "age"))")
+        }
+        if UserDefaults.exists(key: "speed") {
+            sliderDefault = userDefault.float(forKey: "speed")
+            self.gameSpeedSlider.value = sliderDefault
+            self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
+        }
+        if UserDefaults.exists(key: "switch") {
+            self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
+        } else {
+            self.userDefault.set(true, forKey: "switch")
+        }
+        if UserDefaults.exists(key: "name") {
+            self.nameField.text = (userDefault.string(forKey: "name"))
+        }
+        if UserDefaults.exists(key: "profileImage") {
+            self.profileImage.image = UIImage(data: (UserDefaults.standard.object(forKey: "profileImage") as! Data))
+        }
+        
         
         /* Decide which bg color to display */
         if userDefault.bool(forKey: "switch") {
@@ -200,7 +235,16 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
 }
-
+/*
+func ifDefaultsExist() {
+    self.ageLabel.text = ("age: " + "\(userDefault.integer(forKey: "age"))")
+    self.gameSpeedSlider.value = sliderDefault
+    self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
+    self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
+    self.nameField.text = (userDefault.string(forKey: "name"))
+    self.profileImage.image = UIImage(data: (UserDefaults.standard.object(forKey: "profileImage") as! Data))
+}
+ */
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -230,4 +274,10 @@ extension UIColor {
            blue: rgb & 0xFF
        )
    }
+}
+
+extension UserDefaults {
+    static func exists(key: String) -> Bool {
+        return UserDefaults.standard.object(forKey: key) != nil
+    }
 }

@@ -15,7 +15,7 @@ class LeaderboardViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        super.view.backgroundColor = UIColor.white
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,7 +38,7 @@ class LeaderboardViewController: UITableViewController {
         // Configure the cell...
         let playerRank = indexPath.row
         let playerInfo = gameData.playerData(forRank: playerRank)
-        
+        cell.backgroundColor = UIColor.clear
         cell.textLabel?.text = playerInfo.name
         cell.detailTextLabel?.text = String(playerInfo.points)
         cell.imageView?.image = playerInfo.photo
@@ -56,8 +56,10 @@ class LeaderboardViewController: UITableViewController {
 
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit
+        editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            
             removeUserOnSwipe = indexPath
             let playerAtRow = gameData.playerData(forRank: indexPath.row)
             gameData.deleteObject(playerAtRow.name)
