@@ -43,9 +43,8 @@ class ViewController: UIViewController {
         } else {
             self.view.backgroundColor = UIColor.white
         }
-
-        
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Hiding points label
@@ -104,10 +103,15 @@ class ViewController: UIViewController {
         
         let gameData = GameData()
         
+        
         guard let name = userDefault.string(forKey: "name"), let profilePicture = userDefault.data(forKey: "profileImage") else {
-            gameData.savePoints(gamePoints, for: "Person", profileImage: (UIImage(named: "person")!.pngData()!))
+            print("saving here")
+            gameData.savePoints(gamePoints, for: "Player", profileImage: (UIImage(named: "person")!.pngData()!))
+            userDefault.set("Player", forKey: "name")
             return
         }
+        
+        print("name is: " + name)
         gameData.savePoints(gamePoints, for: name, profileImage: profilePicture)
     }
 
@@ -181,7 +185,6 @@ class ViewController: UIViewController {
         }
         
     }
-    
     
 }
 

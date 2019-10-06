@@ -31,6 +31,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     let userDefault = UserDefaults.standard
     var sliderDefault: Float!
     
+    /* Colors to be used */
+    
+    let paleRed = UIColor(rgb: 0xff8080)
+    let paleBlue = UIColor(rgb: 0xccffff)
+    let paleGreen = UIColor(rgb: 0xcdffc5)
+    let paleYellow = UIColor(rgb: 0xffffcc)
+
     @IBAction func retrieveGameSpeed(_ sender: Any) {
         let speed = String(format: "%.2f", gameSpeedSlider.value)
         gameSpeedLabel.text = ("(" + speed + " s /round)")
@@ -48,15 +55,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     /* UISwitch - Lets you see if User decides to change background color
-     * If true -> Sets global default to true
+     * If true -> Sets global default to true. Changes background and circle to whatever index it was last on
      * If false -> Sets global default to false
      */
     @IBAction func isSwitchToggled(_ sender: UISwitch) {
         if sender.isOn {
             userDefault.set(true, forKey: "switch")
             bgSwitch.setOn(true, animated:true)
-            let paleRed = UIColor(rgb: 0xff8080)
-            userDefault.set(paleRed, forKey: "bgColor")
+            changeBackgroundBasedOn(userDefault.integer(forKey: "index"))
+            changeCircleColorBasedOn(userDefault.integer(forKey: "index"))
             whiteCircle.isHidden = true
             bgCircle.isHidden = false
         } else {
@@ -79,38 +86,31 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             switch backgroundColorButtons.selectedSegmentIndex {
             // Red switch
             case 0:
-                let paleRed = UIColor(rgb: 0xff8080)
                 userDefault.set(paleRed, forKey: "bgColor")
-                self.bgCircle?.tintColor = paleRed
+                changeCircleColorBasedOn(0)
+                userDefault.set(0, forKey: "index")
             // Blue switch
             case 1:
-                let paleBlue = UIColor(rgb: 0xccffff)
                 userDefault.set(paleBlue, forKey: "bgColor")
-                print("swapping to blue")
-                self.bgCircle?.tintColor = paleBlue
-                
+                changeCircleColorBasedOn(1)
+                userDefault.set(1, forKey: "index")
             // Green switch
             case 2:
-                let paleGreen = UIColor(rgb: 0xcdffc5)
                 userDefault.set(paleGreen, forKey: "bgColor")
-                print("swapping to green")
-                bgCircle?.tintColor = paleGreen
+                changeCircleColorBasedOn(2)
+                userDefault.set(2, forKey: "index")
                 
             // Yellow switch
             case 3:
-                let paleYellow = UIColor(rgb: 0xffffcc)
                 userDefault.set(paleYellow, forKey: "bgColor")
-                print("swapping to yellow")
-                bgCircle?.tintColor = paleYellow
+                changeCircleColorBasedOn(3)
+                userDefault.set(3, forKey: "index")
             default:
                 // Resting on the red switch
-                let paleRed = UIColor(rgb: 0xff8080)
-                userDefault.set(paleRed, forKey: "bgColor")
-                self.bgCircle?.tintColor = paleRed
+                changeCircleColorBasedOn(userDefault.integer(forKey: "index"))
             }
         } else {
-            userDefault.set(UIColor.white, forKey: "bgColor")
-
+            userDefault.set(backgroundColorButtons.selectedSegmentIndex, forKey: "index")
         }
         
     }
@@ -133,7 +133,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
  
     func textFieldShouldReturn(_ textField: UITextField!) -> Bool {
-        userDefault.set(nameField.text, forKey: "name")
+        let text = (nameField.text ?? "").isEmpty ? "Chris" : nameField.text
+        print(text!)
+        userDefault.set(text, forKey: "name")
         nameField.resignFirstResponder()
         return true;
     }
@@ -158,7 +160,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
        )}))
         
         confirmUpdate.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
         self.present(confirmUpdate, animated: true)
 
     }
@@ -170,6 +171,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
       // userDefault.set(profileImage, forKey:"profileImage")
         _ = navigationController?.popToRootViewController(animated: true)
         userDefault.set(profileImage.image?.pngData(), forKey: "profileImage")
+        let text = (nameField.text ?? "").isEmpty ? "Chris" : nameField.text
+        userDefault.set(text, forKey: "name")
     }
     
     /* Loading settings page */
@@ -194,16 +197,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         imagePicker.delegate = self
         
         // Setup defaults
-
-        /*
-        self.ageLabel.text = ("age: " + "\(userDefault.integer(forKey: "age"))")
-        self.gameSpeedSlider.value = sliderDefault
-        self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
-        self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
-        self.nameField.text = (userDefault.string(forKey: "name"))
-        self.profileImage.image = UIImage(data: (UserDefaults.standard.object(forKey: "profileImage") as! Data))
-        */
-        
         if UserDefaults.exists(key: "age") {
             self.ageLabel.text = ("age: " + "\(userDefault.integer(forKey: "age"))")
         }
@@ -213,9 +206,20 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
         }
         if UserDefaults.exists(key: "switch") {
+            print(userDefault.bool(forKey: "switch"))
             self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
         } else {
-            self.userDefault.set(true, forKey: "switch")
+            self.bgSwitch.setOn(false, animated:true)
+        }
+        if UserDefaults.exists(key: "index") {
+            if (userDefault.bool(forKey: "switch")) {
+                backgroundColorButtons.selectedSegmentIndex = userDefault.integer(forKey: "index")
+                changeCircleColorBasedOn(userDefault.integer(forKey: "index"))
+                changeBackgroundBasedOn(userDefault.integer(forKey: "index"))
+            } else {
+                    changeCircleColorBasedOn(userDefault.integer(forKey: "index"))
+                    userDefault.set(UIColor.white, forKey: "bgColor")
+            }
         }
         if UserDefaults.exists(key: "name") {
             self.nameField.text = (userDefault.string(forKey: "name"))
@@ -225,7 +229,9 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
         
         
-        /* Decide which bg color to display */
+        /* Decide which circle to display
+         * colored if switch is on
+         * white if the switch is off */
         if userDefault.bool(forKey: "switch") {
             bgCircle.isHidden = false
             whiteCircle.isHidden = true
@@ -234,21 +240,49 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             whiteCircle.isHidden = false
         }
     }
+    
+    /* Will change in the color of our background
+     * based on the index of the segmented controller
+     */
+    func changeBackgroundBasedOn(_ index: Int) {
+        switch index {
+        case 0:
+            userDefault.set(paleRed, forKey: "bgColor")
+        case 1:
+            userDefault.set(paleBlue, forKey: "bgColor")
+        case 2:
+            userDefault.set(paleGreen, forKey: "bgColor")
+        case 3:
+            userDefault.set(paleYellow, forKey: "bgColor")
+        default:
+            userDefault.set(UIColor.white, forKey: "bgColor")
+        }
+    }
+    
+    /* Will change in the color of our circle
+     * based on the index of the segmented controller
+     */
+    func changeCircleColorBasedOn(_ index: Int) {
+        switch index {
+        case 0:
+            self.bgCircle?.tintColor = paleRed
+        case 1:
+            self.bgCircle.tintColor = paleBlue
+        case 2:
+            self.bgCircle.tintColor = paleGreen
+        case 3:
+            self.bgCircle?.tintColor = paleYellow
+        default:
+            self.bgCircle?.tintColor = userDefault.color(forKey: "bgColor")
+        }
+    }
 }
-/*
-func ifDefaultsExist() {
-    self.ageLabel.text = ("age: " + "\(userDefault.integer(forKey: "age"))")
-    self.gameSpeedSlider.value = sliderDefault
-    self.gameSpeedLabel.text = ("(" + "\(sliderDefault!)" + " s /round)")
-    self.bgSwitch.setOn(userDefault.bool(forKey: "switch"), animated:true)
-    self.nameField.text = (userDefault.string(forKey: "name"))
-    self.profileImage.image = UIImage(data: (UserDefaults.standard.object(forKey: "profileImage") as! Data))
-}
- */
+
+
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+    
         guard let selectedImage = info[.editedImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
