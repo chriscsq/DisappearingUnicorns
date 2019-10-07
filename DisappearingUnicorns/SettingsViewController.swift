@@ -127,11 +127,14 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         ageField.placeholder = nil
     }
     
-    
+    @IBAction func textFieldEditDidBegin(_ sender: Any) {
+        nameField.text = nil
+    }
+    /*
     func textFieldDidBeginEditing(_ textField: UITextField) {
         nameField.text = nil
     }
- 
+    */
     func textFieldShouldReturn(_ textField: UITextField!) -> Bool {
         let text = (nameField.text ?? "").isEmpty ? "Chris" : nameField.text
         print(text!)

@@ -193,6 +193,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
+                                    <action selector="textFieldEditDidBegin:" destination="KrR-QI-dUH" eventType="editingDidBegin" id="yyw-2P-3LH"/>
                                     <action selector="updateNameField:" destination="KrR-QI-dUH" eventType="editingDidEnd" id="5ei-OX-tgF"/>
                                 </connections>
                             </textField>
